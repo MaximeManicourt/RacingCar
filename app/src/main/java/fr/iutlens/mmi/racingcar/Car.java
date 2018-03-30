@@ -51,11 +51,9 @@ public class Car {
             c =0.3f;
         }
 
-
         if (track.valid(x+vX,y)){
             x += (float) ( vX*c);
         }
-
         if (track.valid(x,y+vY)){
             y += (float) ( vY*c);
         }
