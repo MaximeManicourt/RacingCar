@@ -44,11 +44,21 @@ public class Car {
 //        x += (float) ( v*sprite.h*Math.cos(Math.toRadians(direction-90)));
 //        y += (float) ( v*sprite.h*Math.sin(Math.toRadians(direction-90)));
 
-        if (track.valid(x+vX,y+vY)){
-            x += (float) ( vX);
-            y += (float) ( vY);
+
+
+        float c = 1;
+        if (!track.valid(x+vX,y+vY)){
+            c =0.3f;
         }
 
+
+        if (track.valid(x+vX,y)){
+            x += (float) ( vX*c);
+        }
+
+        if (track.valid(x,y+vY)){
+            y += (float) ( vY*c);
+        }
     }
 
     public double bound(double value, double max){
