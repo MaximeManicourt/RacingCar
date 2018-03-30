@@ -10,6 +10,11 @@ import fr.iutlens.mmi.racingcar.utils.SpriteSheet;
 
 public class Track {
 
+    public static final int HAUT = 1;
+    public static final int DROIT = 2;
+    public static final int BAS = 4;
+    public static final int GAUCHE = 8;
+    private static final float MUR = 0.12f;
     private int[][] data;
     private final String DIGITS ="0123456789ABCDEF";
     // 0123
@@ -17,18 +22,16 @@ public class Track {
     // 89AB
     // CDEF
     private final String[] def = {
-            "111111111111",
-            "1111111866A1",
-            "186666A49B51",
-            "14097BFD5451",
-            "14051E77C451",
-            "140511111451",
-            "122211111451",
-            "140511186D51",
-            "1405186D97C1",
-            "140F6D97C111",
-            "1E7777C11111",
-            "111111111111"};
+            "93B951153B",
+            "AC2C3EC3AA",
+            "ABC1695686",
+            "C2BC3853C3",
+            "96C56C747A",
+            "C15153953A",
+            "96D6D6A96A",
+            "C51395683A",
+            "956A853AC6",
+            "C57C696C57"};
 
     private final int char2hex(char c){
         return DIGITS.indexOf(c);
@@ -48,7 +51,7 @@ public class Track {
     }
 
     public int get(int i, int j){
-        return data[i][j];
+        return data[j][i];
     }
 
     public int getSizeY(){
@@ -78,5 +81,36 @@ public class Track {
                 sprite.paint(canvas, data[i][j], j * sprite.w, i * sprite.h);
             }
         }
+    }
+
+    public boolean valid(float x, float y) {
+        if (x <0 || y <0) return true;
+        int i = (int) x;
+        int j = (int) y;
+        if (i >= getSizeX() || j >= getSizeY()) {
+            return true;
+        }
+        x= x-i;
+        y =y-j;
+
+        int code= get(i,j);
+
+        return mask(code,x,y);
+/*        if ((code & HAUT)!= 0){
+
+        }
+*/
+
+//        return true;
+    }
+
+    private boolean mask(int code, float x, float y) {
+        if ((code & HAUT)!= 0 && y< MUR) return false;
+        if ((code & BAS)!= 0 && y > 1-MUR) return false;
+        if ((code & GAUCHE)!= 0 && x< MUR) return false;
+        if ((code & DROIT)!= 0 && x > 1-MUR) return false;
+
+
+        return true;
     }
 }

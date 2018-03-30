@@ -11,18 +11,17 @@ import fr.iutlens.mmi.racingcar.utils.SpriteSheet;
  */
 
 public class Car {
-
     private SpriteSheet sprite;
 
     float x,y,direction;
-    float v,dd;
+    float vX,vY,dd;
 
     public Car(int sprite_id, float x, float y, float direction){
         this.x = x;
         this.y = y;
         this.direction = direction;
         this.sprite = SpriteSheet.get(sprite_id);
-        this.v = 0;
+//        this.v = 0;
         this.dd = 0;
     }
 
@@ -30,18 +29,25 @@ public class Car {
         canvas.save();
         canvas.translate(x*unit_x,y*unit_y);
         canvas.rotate(direction);
+        canvas.scale(0.5f,0.5f);
         int model = 0;
-        if (dd < -5) model = 1;
-        if (dd > 5) model = 2;
+//        if (dd < -5) model = 1;
+//        if (dd > 5) model = 2;
         sprite.paint(canvas,model,-sprite.w/2 , -sprite.h/2);
         canvas.restore();
     }
 
 
-    public void update() {
-        direction += dd*v*sprite.h;
-        x += (float) ( v*sprite.h*Math.cos(Math.toRadians(direction-90)));
-        y += (float) ( v*sprite.h*Math.sin(Math.toRadians(direction-90)));
+    public void update(Track track) {
+//        direction += dd*v*sprite.h;
+        direction = (float) Math.toDegrees(Math.atan2(vY,vX))+90;
+//        x += (float) ( v*sprite.h*Math.cos(Math.toRadians(direction-90)));
+//        y += (float) ( v*sprite.h*Math.sin(Math.toRadians(direction-90)));
+
+        if (track.valid(x+vX,y+vY)){
+            x += (float) ( vX);
+            y += (float) ( vY);
+        }
 
     }
 
@@ -57,13 +63,16 @@ public class Car {
         return value;
     }
 
-    public void setCommand(double pitch, double roll) {
+    public void setCommand(double pitch,double  roll) {
         pitch = rescale(pitch,90,15);
         roll = rescale(roll,90,15);
 
-        this.v = (float) (pitch*0.00005);
-        this.dd = 0;
-        this.dd = (float) (roll/2);
+
+//        this.v = (float) (pitch*0.000025);
+
+
+        this.vY = (float) -(pitch*0.0009);
+        this.vX = (float) (roll*0.0009);
 
     }
 }

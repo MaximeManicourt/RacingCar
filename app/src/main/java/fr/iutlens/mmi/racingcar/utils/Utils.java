@@ -7,7 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
-public class Utils {
+public class  Utils {
 	
 	public static String getStringResourceByName(Context context, String aString) {
 	      String packageName = context.getPackageName();
