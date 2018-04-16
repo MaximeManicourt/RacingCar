@@ -45,11 +45,11 @@ public class GameView extends View implements TimerAction,  OrientationProxy.Ori
 
         // Chargement des feuilles de sprites
         SpriteSheet.register(R.drawable.circuit,4,4,this.getContext());
-        SpriteSheet.register(R.drawable.car,3,1,this.getContext());
+        SpriteSheet.register(R.drawable.tortue,3,1,this.getContext());
 
         // Création des différents éléments à afficher dans la vue
         track = new Track(null,R.drawable.circuit);
-        car = new Car(R.drawable.car,0.5f,0.5f,0);
+        car = new Car(R.drawable.tortue,0.5f,0.5f,0);
 
         // Gestion du rafraichissement de la vue. La méthode update (juste en dessous)
         // sera appelée toutes les 30 ms
@@ -70,7 +70,7 @@ public class GameView extends View implements TimerAction,  OrientationProxy.Ori
     @Override
     public void update() {
         if (this.isShown()) { // Si la vue est visible
-            timer.scheduleRefresh(30); // programme le prochain rafraichissement
+            if (!car.gagne) timer.scheduleRefresh(30); // programme le prochain rafraichissement
             car.update(track); // mise à jour de la position de la voiture
             invalidate(); // demande à rafraichir la vue
         }

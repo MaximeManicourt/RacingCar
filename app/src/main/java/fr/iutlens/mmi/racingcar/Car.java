@@ -15,6 +15,7 @@ public class Car {
 
     float x,y,direction;
     float vX,vY,dd;
+    public boolean gagne;
 
     public Car(int sprite_id, float x, float y, float direction){
         this.x = x;
@@ -23,6 +24,7 @@ public class Car {
         this.sprite = SpriteSheet.get(sprite_id);
 //        this.v = 0;
         this.dd = 0;
+        gagne = false;
     }
 
     public void paint(Canvas canvas, int unit_x, int unit_y){
@@ -56,6 +58,10 @@ public class Car {
         }
         if (track.valid(x,y+vY)){
             y += (float) ( vY*c);
+        }
+
+        if (track.dehors(x,y)){
+           gagne = true;
         }
     }
 

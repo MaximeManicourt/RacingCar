@@ -113,4 +113,14 @@ public class Track {
 
         return true;
     }
+
+    public boolean dehors(float x, float y) {
+         if (x <0 || y <0) return true;
+        int i = (int) x;
+        int j = (int) y;
+        if (i >= getSizeX() || j >= getSizeY()) {
+            return true;
+        }
+        return false;
+    }
 }
